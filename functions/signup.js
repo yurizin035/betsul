@@ -2,7 +2,7 @@ exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
-      body: JSON.stringify({ error: "Método não permitido. Use POST." }),
+      body: JSON.stringify({ error: "Acesso negado :/" }),
     };
   }
 
