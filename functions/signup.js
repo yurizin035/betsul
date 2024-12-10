@@ -1,5 +1,11 @@
+const fs = require('fs');
+const path = require('path');
+
+// Caminho do arquivo onde os dados serão salvos
+const dadosPath = path.join(__dirname, 'usuarios.json');
+
 exports.handler = async (event) => {
-  // Se for um GET, verificamos o parâmetro `email`
+  // Se for um GET, verificamos o parâmetro 'email'
   if (event.httpMethod === "GET") {
     const queryParams = event.queryStringParameters;
     const email = queryParams?.email;
@@ -11,8 +17,14 @@ exports.handler = async (event) => {
       };
     }
 
-    // Simula a recuperação dos dados armazenados no "localStorage" (substitua pelo seu banco de dados real)
-    const todosUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    // Lê o arquivo de dados
+    let todosUsuarios = [];
+    try {
+      const dados = fs.readFileSync(dadosPath);
+      todosUsuarios = JSON.parse(dados);
+    } catch (err) {
+      console.error("Erro ao ler os dados:", err);
+    }
 
     // Busca o usuário pelo email
     const usuarioEncontrado = todosUsuarios.find((usuario) => usuario.email === email);
@@ -45,8 +57,14 @@ exports.handler = async (event) => {
       };
     }
 
-    // Recupera os usuários salvos (ou cria um array vazio)
-    const todosUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    // Lê o arquivo de dados
+    let todosUsuarios = [];
+    try {
+      const dados = fs.readFileSync(dadosPath);
+      todosUsuarios = JSON.parse(dados);
+    } catch (err) {
+      console.log("Nenhum dado encontrado, criando novo arquivo.");
+    }
 
     // Cria um novo usuário
     const novoUsuario = {
@@ -59,8 +77,12 @@ exports.handler = async (event) => {
     // Adiciona o novo usuário ao array
     todosUsuarios.push(novoUsuario);
 
-    // Salva no localStorage
-    localStorage.setItem("usuarios", JSON.stringify(todosUsuarios));
+    // Salva os dados no arquivo
+    try {
+      fs.writeFileSync(dadosPath, JSON.stringify(todosUsuarios, null, 2));
+    } catch (err) {
+      console.error("Erro ao salvar os dados:", err);
+    }
 
     return {
       statusCode: 200,
