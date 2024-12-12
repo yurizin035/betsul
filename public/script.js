@@ -9,58 +9,73 @@ function setUserLoggedCookie(email) {
     document.cookie = `${cookieName}=${encodeURIComponent(email)}; expires=${expirationDate.toUTCString()}; path=/`;
 }
 
-// Formulário de cadastro
 const signupForm = document.getElementById('signmenu');
 signupForm?.addEventListener('submit', (event) => {
     event.preventDefault();
-    const formData = new FormData(signupForm);
+
+    // Obtém os dados do formulário
+    const nome = document.getElementById('name').value;
+    const whatsapp = document.getElementById('whatsapp').value;
+    const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
+
+    // Cria o objeto com os dados
+    const data = {
+        nome: nome,
+        whatsapp: whatsapp,
+        email: email,
+        senha: senha
+    };
 
     fetch('https://racial-henrie-betsul-9f2864d6.koyeb.app/', {
-        method: 'POST',
-        body: formData,
-    })
-        .then(response => response.text())
-        .then(data => {
-            if (data.includes("Usuário registrado com sucesso!")) {
-                const email = document.getElementById('email').value;
-                setUserLoggedCookie(email);
-                window.location.href = '/';
-            } else {
-                alert(data); // Exibe mensagem de erro
-            }
-        })
-        .catch(error => console.error('Erro:', error));
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'  // Define que estamos enviando dados em JSON
+    },
+    body: JSON.stringify(data)  // Converte o objeto em uma string JSON
+})
+.then(response => response.text())  // Espera que a resposta seja texto simples
+.then(data => {
+    if (data === "Usuário registrado com sucesso!") {
+        setUserLoggedCookie(email);  // Função para definir o cookie de login
+        window.location.href = '/';  // Redireciona após sucesso
+    } else {
+        alert(data);  // Exibe a mensagem de erro
+    }
+})
+.catch(error => console.error('Erro:', error));
 });
-
-// Formulário de login
 const loginForm = document.getElementById('signmenu1');
-loginForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
+loginForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-    const emailInput = document.getElementById('myemail').value;
-    const senhaInput = document.getElementById('mypass').value;
+    // Obtém os dados do formulário
+    const email = document.getElementById('myemail').value;
+    const senha = document.getElementById('mypass').value;
 
-    fetch(jsonUrl)
-        .then(response => {
-            if (!response.ok) throw new Error("Erro ao buscar os dados.");
-            return response.json();
-        })
-        .then(users => {
-            const user = users.find(user => user.email === emailInput);
-            if (user) {
-                if (user.senha === senhaInput) {
-                    alert("pi");
-                } else {
-                    alert("Senha incorreta!");
-                }
-            } else {
-                alert("Email não encontrado!");
-            }
-        })
-        .catch(error => {
-            console.error("Erro:", error);
-            alert("Não foi possível verificar os dados. Tente novamente mais tarde.");
-        });
+    // Cria o objeto com os dados
+    const data = {
+        email: email,
+        senha: senha
+    };
+
+    fetch('https://racial-henrie-betsul-9f2864d6.koyeb.app/login.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'  // Define que estamos enviando dados em JSON
+        },
+        body: JSON.stringify(data)  // Converte o objeto em uma string JSON
+    })
+    .then(response => response.json())  // Espera que a resposta seja um JSON
+    .then(data => {
+        if (data.message === "Sucesso! Login realizado.") {
+            setUserLoggedCookie(email);  // Função para definir o cookie de login
+            window.location.href = '/';  // Redireciona após login bem-sucedido
+        } else {
+            alert(data.message);  // Exibe a mensagem de erro
+        }
+    })
+    .catch(error => console.error('Erro:', error));
 });
 
 // Função para login bem-sucedido
