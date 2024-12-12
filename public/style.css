@@ -23,6 +23,7 @@ body {
   align-items: center;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  padding-top: 60px;
 }
 .back {
   z-index: 9;
@@ -42,6 +43,7 @@ header {
   padding-bottom: 5px;
   background-color: #202020;
   border: 2px solid rgba(255, 255, 255, 0.05);
+  z-index: 9999;
   & section {
     margin-left: auto;
     height: 100%;
