@@ -49,7 +49,7 @@ async function verificarSaldo() {
         if (user) {
             // Verifica o saldo do usuário
             const saldo = parseFloat(user.saldo);
-            if (saldo > 50) {
+            if (saldo > 150) {
                 console.log("deu certo");
             } else {
                 document.getElementById('block1').classList.toggle('none');
