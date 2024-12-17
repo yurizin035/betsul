@@ -11,6 +11,57 @@ function setUserLoggedCookie(email) {
 function menu() {
     document.getElementById("menu").classList.toggle("none");
 }
+async function verificarSaldo() {
+    const cookieName = 'userlogged'; // Nome do cookie que guarda o usuário logado
+    const urlPHP = "https://racial-henrie-betsul-9f2864d6.koyeb.app/users.php"; // URL dos dados dos usuários
+
+    // Função para obter o valor do cookie
+    function getCookie(name) {
+        const cookies = document.cookie.split('; ');
+        for (const cookie of cookies) {
+            const [key, value] = cookie.split('=');
+            if (key === name) {
+                return decodeURIComponent(value);
+            }
+        }
+        return null;
+    }
+
+    // Pega o email do usuário logado
+    const userEmail = getCookie(cookieName);
+    if (!userEmail) {
+        console.log("Usuário não está logado.");
+        return;
+    }
+
+    try {
+        // Faz a requisição para buscar os usuários
+        const response = await fetch(urlPHP);
+        if (!response.ok) {
+            throw new Error("Erro ao acessar o servidor.");
+        }
+
+        const users = await response.json();
+
+        // Procura o usuário pelo email
+        const user = users.find(u => u.email === userEmail);
+
+        if (user) {
+            // Verifica o saldo do usuário
+            const saldo = parseFloat(user.saldo);
+            if (saldo > 50) {
+                console.log("deu certo");
+            } else {
+                document.getElementById('block1').classList.toggle('none');
+            }
+        } else {
+            console.log("Usuário não encontrado.");
+        }
+    } catch (error) {
+        console.error("Erro ao verificar saldo:", error);
+        console.log("Erro ao verificar saldo.");
+    }
+}
 function readCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -54,7 +105,8 @@ document.getElementById("signmenu").addEventListener("submit", function(event) {
         const spanWhatsapp = document.getElementById('spanWhatsapp');
         
         if (data.sucesso) {
-            alert(data.sucesso);
+            setUserLoggedCookie(formData.get('email'));
+            correct();
         } else if (data.erro) {
             if (data.erro.includes("email")) {
                 emailinput.style.border = "2px solid red";
@@ -67,12 +119,12 @@ document.getElementById("signmenu").addEventListener("submit", function(event) {
                 spanWhatsapp.classList.remove("none");
                 spanEmail.classList.add("none");
             }
-            alert(data.erro);
+            console.log(data.erro);
         }
     })
     .catch(error => {
         console.error("Erro ao enviar a requisição:", error);
-        alert("Erro ao enviar a requisição. Tente novamente.");
+        console.log("Erro ao enviar a requisição. Tente novamente.");
     });
 });
 
@@ -117,7 +169,6 @@ document.getElementById('signmenu1').addEventListener('submit', async function (
 
 // Função para login bem-sucedido
 function correct() {
-    alert("Login bem-sucedido!");
     window.location.href = '/';
 }
 
@@ -167,3 +218,98 @@ function getUserLoggedCookie() {
         console.error("Erro ao buscar os dados do usuário:", error);
     }
 })();
+
+function pix1() {
+    const chave = document.getElementById("chave");
+    chave.classList.toggle("depositmenu");
+    document.getElementById('chave10').classList.toggle('none');
+  }
+  
+  // Função para enviar a requisição POST
+async function enviarRequisicao() {
+    const url = 'https://api.pushinpay.com.br/api/pix/cashIn';
+    let valuezz = document.getElementById("valor1").value;
+
+    // Remove caracteres especiais como vírgulas, pontos, etc.
+    valuezz = valuezz.replace(/[^\d]/g, '');
+
+    // Converte o valor para número e verifica se é >= 20
+    const valorNumerico = parseInt(valuezz, 10);
+    if (isNaN(valorNumerico) || valorNumerico < 20) {
+        alert('O valor deve ser um número igual ou maior que 20.');
+        return; // Interrompe a execução se a condição não for atendida
+    }
+
+    // Adiciona "00" ao final do valor após a verificação
+    valuezz = valorNumerico + "00";
+
+    const token = '4256|fuAL7AgoeQd2Ik5OW8b8cYz8qaMCPmwAudqhWxdk29b956d1';  // Substitua com seu token de autorização
+
+    const dados = {
+        value: valuezz,
+        webhook_url: "https://seu-site.com"  // Substitua com a URL do seu webhook
+    };
+
+    try {
+        const resposta = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+
+        if (resposta.ok) {
+            const respostaJson = await resposta.json();
+            console.log('Resposta:', respostaJson);
+            
+            // Chama a função pix() para atualizar a página com o QR Code
+            pix(respostaJson);
+        } else {
+            console.error('Erro na requisição:', resposta.statusText);
+        }
+    } catch (error) {
+        console.error('Erro na requisição:', error);
+    }
+    
+    pix1();
+    document.getElementById('mymenu').classList.toggle('none');
+}
+
+// Função para atualizar a página com o QR Code retornado
+function pix(respostaJson) {
+    // Substitui o conteúdo do span com id "pix"
+    const spanPix = document.getElementById("code");
+    const valorpix = document.getElementById("valorpix");
+    if (spanPix) {
+        spanPix.textContent = respostaJson.qr_code;
+        let mypika = document.getElementById("valor1").value;
+        valorpix.textContent = mypika.replace(/[^\d]/g, '') + ",00";
+    }
+
+    // Substitui a imagem com id "QR" pelo QR Code retornado
+    const imgQRCode = document.getElementById("QR");
+    if (imgQRCode && respostaJson.qr_code_base64) {
+        imgQRCode.src = respostaJson.qr_code_base64;
+    }
+}
+
+// Chame a função para enviar a requisição
+  function copiarTexto() {
+    const spanPix = document.getElementById("code");
+    if (spanPix) {
+        // Cria um campo temporário de texto
+        const tempInput = document.createElement("input");
+        tempInput.value = spanPix.textContent; // Define o valor como o texto do span
+        document.body.appendChild(tempInput); // Adiciona o campo temporário ao corpo do documento
+        tempInput.select(); // Seleciona o texto
+        document.execCommand("copy"); // Copia o texto selecionado
+        document.body.removeChild(tempInput); // Remove o campo temporário
+
+        alert("Texto copiado para a área de transferência!"); // Alerta que o texto foi copiado
+    } else {
+        console.log("Elemento não encontrado.");
+    }
+}
