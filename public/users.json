@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "nome": "j",
+        "whatsapp": "+55",
+        "email": "j@j",
+        "senha": "j",
+        "saldo": 50
+    },
+    {
+        "id": 2,
+        "nome": "j",
+        "whatsapp": "+556",
+        "email": "j@jk",
+        "senha": "j",
+        "saldo": 50
+    }
+]

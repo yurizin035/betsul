@@ -10,19 +10,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-  <title>DRASHBOARD</title>
+  <title>Betsul - Sua bet de norte a sul!</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="">
   <img class="back" src="back.png">
+  <section id="menu" class="menu blur1">
+  <section id="menu" class="divmenu">
+    <a href="javascript:deposit()"><i class='bx bx-money-withdraw'></i>Depositar</a>
+    <a href="javascript:saque()"><i class='bx bxs-badge-dollar' ></i>Sacar</a>
+    <a href="javascript:rollover()"><i class='bx bx-stats'></i>Rollover</a>
+    <a href="javascript:logout()"><i class='bx bx-log-out'></i>Deslogar</a>
+    <a href="javascript:menu()"><i class='bx bx-x'></i>Fechar menu</a>
+  </section>
+  </section>
   <header>
     <img class="logo" src="logo.png">
-    <section id="header">
+    <section id="header2" class="none">
     <a class="sign" href="javascript:login()">Entrar</a>
     <a class="signup" href="javascript:signup()">Cadastrar</a>
     </section>
-    <section class="none">
-      
+    <section id="header" class="none">
+      <span id="saldo" style="font-size: 20px; font-weight: bold; margin-left: auto; margin-right: 2%;">...</span>
+      <a style="font-weight: 300;font-size: 20px; display: flex; justify-content: center; align-items: center;width: 44px; height: 34px; background-color:#5F48E0; border-radius: 12px;" href="javascript:wallet()"><i class='bx bxs-wallet-alt' ></i></a>
+      <a style="margin-left: 2%;margin-right: 15px;font-weight: 300;font-size: 20px; display: flex; justify-content: center; align-items: center;width: 44px; height: 44px; background-color:#5F48E0; border-radius: 100%;" href="javascript:menu()">CF</a>
     </section>
   </header>
   <!-- Slider main container -->
@@ -167,16 +178,16 @@
   </section>
   <section id="signdiv" class="signdiv none">
       <div class="blur1"></div>
-    <form id="signmenu"  class="signmenu none" method="post">
+    <form id="signmenu"  action="signup.php" method="post" class="signmenu none" method="post">
       <img class="bannermenu" src="signup.png">
       <span>Nome</span>
       <input type="name" id="name" name="name" placeholder="Seu nome" required/>
-      <span>Whatsapp</span>
-      <input type="tel" id="whatsapp" name="whatsapp" value="+55" required/>
-      <span class="none" id="spanWhatsapp" style="color: red; margin-top: 0px;">Este Whatsapp Já está em uso!</span>
       <span>Email</span>
       <input type="email" id="email" name="email" placeholder="email@email.com" required/>
       <span class="none" id="spanEmail" style="color: red;">Este E-mail já está em uso!</span>
+      <span>Whatsapp</span>
+      <input type="tel" id="whatsapp" name="whatsapp" value="+55" required/>
+      <span class="none" id="spanWhatsapp" style="color: red; margin-top: 0px;">Este Whatsapp Já está em uso!</span>
       <span>Senha</span>
       <input type="password" id="senha" name="senha" placeholder="12345" required/>
 <div class="checkbox-wrapper-46">
@@ -192,10 +203,11 @@
     <form id="signmenu1" class="signmenu none" method="post">
       <img class="bannermenu" src="signup.png">
       <span>Email</span>
-      <input id="myemail" type="email" required/>
+      <input id="myemail1" type="email" required/>
       <span>Senha</span>
-      <input id="mypass" type="password" required/>
+      <input id="mypass1" type="password" required/>
       <button class="submitlogin" type="submit">Login</button>
+      <span class="" id="message" style="color: red; margin-top: 0px;"></span>
       <a href="javascript:login()">Voltar</a>
     </form>
   </section>
