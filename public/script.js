@@ -125,3 +125,7 @@ function pix(respostaJson) {
         console.log("Elemento não encontrado.");
     }
 }
+function alert(message) {
+  document.getElementById("myalert").classList.toggle("none");
+  document.getElementById("spanalert").innerText = message;
+}
