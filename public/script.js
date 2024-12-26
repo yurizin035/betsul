@@ -28,6 +28,7 @@ if (userCookie) {
 } else {
   const divsign = document.getElementById("divsign");
   divsign.classList.toggle("none");
+  alert("Se cadastre agora e ganhe 150 R$ no PIX! ✅");
 }
 
 function pix1() {
