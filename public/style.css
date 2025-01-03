@@ -546,3 +546,87 @@ footer {
     white-space: nowrap; /* Impede a quebra de linha */
     text-overflow: ellipsis; /* Adiciona "..." no final se o texto for maior que o espaço disponível */
 }
+
+
+/* From Uiverse.io by Yaya12085 */ 
+.thecard {
+  position: fixed;
+  max-width: 90%;
+  min-width: 80%;
+  border-width: 1px;
+  border-color: rgba(219, 234, 254, 1);
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 1rem;
+  z-index: 9999;
+}
+
+.theheader {
+  display: flex;
+  align-items: center;
+  grid-gap: 1rem;
+  gap: 1rem;
+}
+
+.theicon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #5F48E0;
+  padding: 0.5rem;
+  color: rgba(255, 255, 255, 1);
+}
+
+.theicon svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.thealert {
+  font-weight: 600;
+  color: rgba(107, 114, 128, 1);
+}
+
+.themessage {
+  margin-top: 1rem;
+  color: rgba(107, 114, 128, 1);
+}
+
+.theactions {
+  margin-top: 1.5rem;
+}
+
+.theactions a {
+  text-decoration: none;
+}
+
+.themark-as-read, .theread {
+  display: inline-block;
+  border-radius: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+}
+
+.theread {
+  width: 90%;
+  background-color: #5F48E0;
+  color: rgba(255, 255, 255, 1);
+}
+
+.themark-as-read {
+  margin-top: 0.5rem;
+  background-color: rgba(249, 250, 251, 1);
+  color: rgba(107, 114, 128, 1);
+  transition: all .15s ease;
+  width: 90%;
+}
+
+.themark-as-read:hover {
+  background-color: rgb(230, 231, 233);
+}

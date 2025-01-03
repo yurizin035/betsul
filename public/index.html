@@ -356,9 +356,25 @@ Estamos autorizados pelo Ministério da Fazenda a explorar apostas de quota fixa
   </section>
   <section id="myalert" style="z-index: 999999; position: fixed; width: 100%; height: 100vh;" class="none">
   <section style="z-index:10;" class="blur1"></section>
-  <section style="flex-direction: column; padding-top: 20px; padding-bottom: 20px; display: flex; align-items: center; z-index: 99999; position: fixed; left: 50%; transform: translate(-50%, -50%); bottom: 50px; background-color: #fafafa; width: 90%; border-radius: 12px; border: 2px dashed #5F4BE1">
-    <span id="spanalert" style="color: #5F4BE1; font-size: 20px;">Oi zk</span>
-    <a href="javascript:document.getElementById('myalert').classList.toggle('none')" style="margin-top: 25px; height: 35px; width: 80%; display: flex; justify-content: center; align-items: center; border: 1px solid #5F4BE1; border-radius: 12px; font-weight: bold; font-size: 100%; color: #5F4BE1;">Entendido</a>
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" class="thecard">
+  <div class="theheader">
+    <span class="theicon">
+      <svg fill="#FFFFFF" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z" fill-rule="evenodd"></path>
+      </svg>
+    </span>
+    <p class="thealert">Nova notificação!</p>
+  </div>
+
+  <p id="spanalert" class="themessage">
+  </p>
+
+  <div class="theactions">
+    <a class="theread" href="javascript:document.getElementById('myalert').classList.toggle('none')" >
+      Concluido
+    </a>
+  </div>
+</div>
   </section>
 </section>
   <script src="script.js"></script>
