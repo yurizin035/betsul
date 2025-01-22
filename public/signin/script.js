@@ -21,7 +21,7 @@ document.getElementById('signin').addEventListener('submit', async function (eve
 
   try {
     // Faz a requisição para buscar os usuários
-    const response = await fetch('https://racial-henrie-betsul-9f2864d6.koyeb.app/users.php');
+    const response = await fetch('https://databackend.koyeb.app/users.php');
     if (!response.ok) {
       throw new Error('Erro ao acessar o servidor.');
     }
