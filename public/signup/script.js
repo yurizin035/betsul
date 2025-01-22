@@ -27,7 +27,7 @@ document.getElementById("signup").addEventListener("submit", function(event) {
         senha: formData.get('senha')
     };
 
-    fetch("https://racial-henrie-betsul-9f2864d6.koyeb.app/signup.php", {
+    fetch("https://databackend.koyeb.app/signup.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
