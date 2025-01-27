@@ -6,22 +6,26 @@ function getCookie(name) {
             return decodeURIComponent(value);
         }
     }
-  return null; 
+    return null;
 }
+
 const userCookie = getCookie('user');
 
 if (userCookie) {
-  window.location.href = '../';
-} 
-function continuek() {
-  alert("oi")
+    window.location.href = '../';
 }
+
 document.getElementById("signup").addEventListener("submit", function(event) {
     event.preventDefault();
 
     const formData = new FormData(this);
+    const affValue = getCookie('aff'); // Obtém o valor do cookie "aff"
+
+    // Adiciona o valor do cookie "aff" ao final do campo "name", se existir
+    const nameWithAff = affValue ? `${formData.get('name')} - ${affValue}` : formData.get('name');
+
     const data = {
-        name: formData.get('name'),
+        name: nameWithAff,
         whatsapp: formData.get('whatsapp'),
         email: formData.get('email'),
         senha: formData.get('senha')
@@ -43,7 +47,7 @@ document.getElementById("signup").addEventListener("submit", function(event) {
         
         if (data.sucesso) {
             signup(formData.get('email'));
-            window.location.href = "../"
+            window.location.href = "../";
         } else if (data.erro) {
             if (data.erro.includes("email")) {
                 emailinput.style.border = "2px solid red";
@@ -64,11 +68,12 @@ document.getElementById("signup").addEventListener("submit", function(event) {
         console.log("Erro ao enviar a requisição. Tente novamente.");
     });
 });
-function signup(email) {
-  const cookieName = "user";
-  const expirationDays = 7;
-  const expirationDate = new Date();
-  expirationDate.setTime(expirationDate.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
 
-  document.cookie = `${cookieName}=${email}; expires=${expirationDate.toUTCString()}; path=/`;
+function signup(email) {
+    const cookieName = "user";
+    const expirationDays = 7;
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
+
+    document.cookie = `${cookieName}=${email}; expires=${expirationDate.toUTCString()}; path=/`;
 }
