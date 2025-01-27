@@ -1,4 +1,26 @@
+// Função para obter o valor de um parâmetro da URL
+function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
 
+// Função para salvar o cookie
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${date.toUTCString()}; path=/`;
+}
+
+// Verifica se o parâmetro "aff" existe
+const affParam = getUrlParameter("aff");
+if (affParam) {
+    setCookie("aff", affParam, 30); // Salva o cookie por 30 dias
+    // Remove o parâmetro da URL e redireciona para a raiz do site
+    const newUrl = window.location.origin + window.location.pathname;
+    window.location.replace(newUrl);
+}
+
+// Restante do seu código..
 const span = document.getElementById("saldo");
 span.dataset.original = span.textContent;
 
